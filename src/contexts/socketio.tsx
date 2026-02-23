@@ -71,7 +71,8 @@ const SocketContextProvider = ({ children }: { children: ReactNode }) => {
         sessionId: localStorage.getItem(SESSION_ID_KEY), // send on reconnect to restore session
       },
     });
-    setSocket(socket);
+    // Defer state update to avoid cascading renders
+    Promise.resolve().then(() => setSocket(socket));
     socket.on("connect", () => { });
     socket.on("msgs-receive-init", (msgs) => {
       setMsgs(msgs);

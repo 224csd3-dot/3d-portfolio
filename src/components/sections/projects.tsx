@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import {
   Modal,
   ModalBody,
@@ -10,41 +10,59 @@ import {
 } from "../ui/animated-modal";
 import { FloatingDock } from "../ui/floating-dock";
 import Link from "next/link";
+import { ChevronDown } from "lucide-react";
 
 import SmoothScroll from "../smooth-scroll";
 import projects, { Project } from "@/data/projects";
-import { cn } from "@/lib/utils";
 import { SectionHeader } from "./section-header";
 
 import SectionWrapper from "../ui/section-wrapper";
 
 const ProjectsSection = () => {
+  const [showMore, setShowMore] = useState(false);
+  const displayedProjects = showMore ? projects : projects.slice(0, 6);
+
   return (
     <SectionWrapper id="projects" className="max-w-7xl mx-auto md:h-[130vh]">
-      <SectionHeader id='projects' title="Projects" />
+      <SectionHeader
+        id="projects"
+        title="Projects"
+        className="!static !mb-16 md:!mb-24"
+      />
       <div className="grid grid-cols-1 md:grid-cols-3">
-        {projects.map((project, index) => (
-          <Modall key={project.src} project={project} />
+        {displayedProjects.map((project, index) => (
+          <Modall key={project.image} project={project} />
         ))}
       </div>
+      {!showMore && projects.length > 6 && (
+        <div className="flex justify-center mt-8 md:mt-12">
+          <button
+            onClick={() => setShowMore(true)}
+            className="flex items-center gap-2 px-6 py-3 rounded-lg border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-900 transition-colors"
+          >
+            <span className="text-sm font-medium">Show More Projects</span>
+            <ChevronDown className="w-5 h-5" />
+          </button>
+        </div>
+      )}
     </SectionWrapper>
   );
 };
 const Modall = ({ project }: { project: Project }) => {
   return (
-    <div className="flex items-center justify-center">
+    <div className="flex items-center justify-center w-full">
       <Modal>
-        <ModalTrigger className="bg-transparent flex justify-center group/modal-btn">
+        <ModalTrigger className="bg-transparent flex justify-center group/modal-btn w-full">
           <div
-            className="relative w-[400px] h-auto rounded-lg overflow-hidden"
-            style={{ aspectRatio: "3/2" }}
+            className="relative w-full max-w-[420px] h-auto rounded-xl overflow-hidden"
+            style={{ aspectRatio: "16 / 9" }}
           >
             <Image
-              className="absolute w-full h-full top-0 left-0 hover:scale-[1.05] transition-all"
-              src={project.src}
+              className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 ease-out group-hover/modal-btn:scale-[1.04]"
+              src={project.image}
               alt={project.title}
-              width={300}
-              height={300}
+              fill
+              sizes="(min-width: 768px) 420px, 92vw"
             />
             <div className="absolute w-full h-1/2 bottom-0 left-0 bg-gradient-to-t from-black via-black/85 to-transparent pointer-events-none">
               <div className="flex flex-col h-full items-start justify-end p-6">

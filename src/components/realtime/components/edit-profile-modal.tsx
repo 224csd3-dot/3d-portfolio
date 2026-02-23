@@ -41,9 +41,11 @@ export const EditProfileModal = ({
   // Reset state when opening
   useEffect(() => {
     if (isOpen) {
-      setName(user.name);
-      setAvatarSeed(user.avatar);
-      setColor(user.color || COLORS[0]);
+      Promise.resolve().then(() => {
+        setName(user.name);
+        setAvatarSeed(user.avatar);
+        setColor(user.color || COLORS[0]);
+      });
     }
   }, [isOpen, user]);
 

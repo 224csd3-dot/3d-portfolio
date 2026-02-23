@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import type { Socket } from 'socket.io-client';
 
-export const useTyping = (socket: Socket | null, currentUser: { name: string } | undefined, scrollToBottom: (smooth: boolean) => void, isAtBottom: boolean) => {
+export const useTyping = (socket: Socket | null, currentUser: { name: string } | undefined, scrollToBottom: (smooth: boolean) => void, isAtBottomRef: React.MutableRefObject<boolean>) => {
   const [typingUsers, setTypingUsers] = useState<Map<string, { username: string, timeout: NodeJS.Timeout }>>(new Map());
   const lastTypingSent = useRef<number>(0);
 
@@ -35,7 +35,7 @@ export const useTyping = (socket: Socket | null, currentUser: { name: string } |
       });
 
       // If we are at bottom, keep at bottom when typing indicator appears/re-renders
-      if (isAtBottom) {
+      if (isAtBottomRef.current) {
         scrollToBottom(true);
       }
     };
@@ -45,7 +45,7 @@ export const useTyping = (socket: Socket | null, currentUser: { name: string } |
     return () => {
       socket.off("typing-receive", handleTypingReceive);
     };
-  }, [socket, isAtBottom, scrollToBottom]);
+  }, [socket, scrollToBottom, isAtBottomRef]);
 
   const handleTyping = () => {
     if (!socket || !currentUser) return;

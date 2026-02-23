@@ -5,10 +5,9 @@ import React from "react";
 import { usePathname } from "next/navigation";
 
 const LINKS = [
-  { name: "Projects", href: "/projects" },
+  { name: "Projects", href: "/#projects" },
   { name: "Contact", href: "/contact" },
-  { name: "About", href: "/about" },
-  { name: "Blog", href: "/blog" },
+  { name: "About", href: "/#about" },
 ];
 
 const Header = () => {

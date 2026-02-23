@@ -65,11 +65,12 @@ export const useChatScroll = (isOpen: boolean, msgsLength: number, currentUserId
     const isMe = lastMsgSessionId === currentUserId;
 
     if (isAtBottomRef.current || isMe) {
-      scrollToBottom(true);
+      Promise.resolve().then(() => scrollToBottom(true));
     } else {
-      setUnreads(prev => prev + 1);
+      // Use Promise to defer setState outside effect
+      Promise.resolve().then(() => setUnreads(prev => prev + 1));
     }
-  }, [msgsLength, currentUserId]);
+  }, [msgsLength, currentUserId, lastMsgSessionId]);
 
   return {
     chatContainer,

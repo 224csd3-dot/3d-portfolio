@@ -162,7 +162,7 @@ export default function RadialMenu() {
         // Trigger action
         triggerConfetti(e.pageX, e.pageY, item);
 
-        // Broadcast to others
+        // Broadcast to others (socket accessed from ref)
         if (socket) {
           const burstId = `${socket.id}-${Date.now()}-${Math.random()}`;
           myTriggersRef.current.add(burstId);
@@ -183,9 +183,8 @@ export default function RadialMenu() {
 
       setIsOpen(false);
       setActiveIndex(null);
-    } else {
     }
-  }, [triggerConfetti]);
+  }, [triggerConfetti, socket]);
 
   const handleContextMenu = useCallback((e: MouseEvent) => {
     if (suppressMenuRef.current) {

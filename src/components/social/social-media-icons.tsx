@@ -3,7 +3,7 @@
 import { useInView } from "framer-motion";
 import React, { useRef } from "react";
 import { Button } from "../ui/button";
-import { SiGithub, SiInstagram, SiLinkedin, SiX } from "react-icons/si";
+import { SiGithub, SiGmail, SiInstagram, SiLinkedin } from "react-icons/si";
 import { config } from "@/data/config";
 import Link from "next/link";
 
@@ -11,22 +11,22 @@ const BUTTONS = [
   {
     name: "Github",
     href: config.social.github,
-    icon: <SiGithub size={"24"} color={"#fff"} />,
+    icon: <SiGithub className="h-5 w-5" />,
   },
   {
     name: "LinkedIn",
     href: config.social.linkedin,
-    icon: <SiLinkedin size={"24"} color={"#fff"} />,
+    icon: <SiLinkedin className="h-5 w-5" />,
   },
   {
-    name: "Twitter",
-    href: config.social.twitter,
-    icon: <SiX size={"24"} color={"#fff"} />,
+    name: "Email",
+    href: "mailto:parikhsmit1105@gmail.com",
+    icon: <SiGmail className="h-5 w-5" />,
   },
   {
     name: "Instagram",
     href: config.social.instagram,
-    icon: <SiInstagram size={"24"} color={"#fff"} />,
+    icon: <SiInstagram className="h-5 w-5" />,
   },
 ];
 
@@ -38,7 +38,13 @@ const SocialMediaButtons = () => {
       {show &&
         BUTTONS.map((button) => (
           <Link href={button.href} key={button.name} target="_blank">
-            <Button variant={"ghost"}>{button.icon}</Button>
+            <Button
+              variant="ghost"
+              className="text-foreground/80 hover:text-foreground dark:text-white/90"
+              aria-label={button.name}
+            >
+              {button.icon}
+            </Button>
           </Link>
         ))}
     </div>

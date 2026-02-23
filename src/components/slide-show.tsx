@@ -26,6 +26,7 @@ const SlideShow = ({ images }: { images: string[] }) => {
         perPage: 1,
         start: 0,
         rewind: true,
+        arrows: false,
         padding: {left:'3rem',right:'3rem'},
         gap: "1rem",
       }}
@@ -62,7 +63,7 @@ const SlideShow = ({ images }: { images: string[] }) => {
               </DialogTrigger>
               <DialogContent className="min-w-[90vw] h-[90vh] bg-transparent outline-none border-none p-0 m-0">
                 <DialogHeader className="w-full">
-                  {/* <DialogTitle>Are you absolutely sure?</DialogTitle> */}
+                  <DialogTitle className="sr-only">Image preview</DialogTitle>
                   <DialogDescription>
                     {image.split("/").pop()}
                   </DialogDescription>

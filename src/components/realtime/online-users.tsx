@@ -78,7 +78,7 @@ const OnlineUsers = () => {
     socket,
     currentUser,
     scrollToBottom,
-    isAtBottomRef.current
+    isAtBottomRef
   );
 
   const sendMessage = (msg: string) => {

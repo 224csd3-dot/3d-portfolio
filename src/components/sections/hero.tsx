@@ -11,7 +11,7 @@ import {
 import { usePreloader } from "../preloader";
 import { BlurIn, BoxReveal } from "../reveal-animations";
 import ScrollDownIcon from "../scroll-down-icon";
-import { SiGithub, SiLinkedin, SiX } from "react-icons/si";
+import { SiGithub, SiGmail, SiLinkedin } from "react-icons/si";
 import { config } from "@/data/config";
 
 import SectionWrapper from "../ui/section-wrapper";
@@ -27,13 +27,18 @@ const HeroSection = () => {
             "h-[calc(100dvh-3rem)] md:h-[calc(100dvh-4rem)] z-[2]",
             "col-span-1",
             "flex flex-col justify-start md:justify-center items-center md:items-start",
-            "pt-28 sm:pb-16 md:p-20 lg:p-24 xl:p-28"
+            "pt-36 sm:pt-32 sm:pb-16 md:p-20 lg:p-24 xl:p-28"
           )}
         >
           {!isLoading && (
             <div className="flex flex-col">
               <div>
-                <BlurIn delay={0.7}>
+                <BlurIn delay={0.6}>
+                  <div className="relative z-10 inline-flex items-center rounded-full border border-white/10 bg-white/5 px-4 py-1 text-xs uppercase tracking-wider text-muted-foreground">
+                    Welcome to my portfolio
+                  </div>
+                </BlurIn>
+                <BlurIn delay={0.8}>
                   <p
                     className={cn(
                       "md:self-start mt-4 font-thin text-md text-slate-500 dark:text-zinc-400",
@@ -51,7 +56,7 @@ const HeroSection = () => {
                       <h1
                         className={cn(
                           "-ml-[6px] leading-none font-thin text-transparent text-slate-800 text-left",
-                          "font-thin text-7xl md:text-7xl lg:text-8xl xl:text-9xl",
+                          "font-thin text-5xl sm:text-6xl md:text-7xl lg:text-8xl",
                           "cursor-default text-edge-outline font-display "
                         )}
                       >
@@ -76,15 +81,19 @@ const HeroSection = () => {
                       "cursor-default font-display sm:text-xl md:text-xl whitespace-nowrap bg-clip-text "
                     )}
                   >
-                    A Full Stack Web Developer
+                    Full Stack Web Developer
+                  </p>
+                </BlurIn>
+                <BlurIn delay={1.35}>
+                  <p className="mt-4 max-w-xl text-sm sm:text-base text-slate-500 dark:text-zinc-400">
+                    I build beautiful, high-impact websites for businesses that
+                    drive results and create lasting impressions.
                   </p>
                 </BlurIn>
               </div>
               <div className="mt-8 flex flex-col gap-3 w-fit">
                 <Link
-                  href={
-                    "https://drive.google.com/file/d/1MTSsUA8V7Po2AsNXT8kZ5sLOpzC8l7qm/view?usp=sharing"
-                  }
+                  href="/Smit_Parikh_Resume.pdf"
                   target="_blank"
                   className="flex-1"
                 >
@@ -112,12 +121,9 @@ const HeroSection = () => {
                     </TooltipContent>
                   </Tooltip>
                   <div className="flex items-center h-full gap-2">
-                    <Link
-                      href={config.social.twitter}
-                      target="_blank"
-                    >
+                    <Link href="mailto:parikhsmit1105@gmail.com">
                       <Button variant={"outline"}>
-                        <SiX size={24} />
+                        <SiGmail size={24} />
                       </Button>
                     </Link>
                     <Link

@@ -92,15 +92,20 @@ const Cursor = ({
   const [msgText, setMsgText] = useState("");
   const { msgs, users } = useContext(SocketContext);
 
+  // Show text on mount, fade out after delay
   useEffect(() => {
-    setShowText(true);
     const fadeOutTimeout = setTimeout(() => {
       setShowText(false);
-    }, 3000); // 1 second
+    }, 3000);
 
     return () => {
       clearTimeout(fadeOutTimeout);
     };
+  }, []);
+
+  // Update showText when position/message changes
+  useEffect(() => {
+    setShowText(true);
   }, [x, y, msgText]);
 
 

@@ -5,7 +5,7 @@ import { blur, translate } from "../../anim";
 import { Link as LinkType } from "@/types";
 import { cn } from "@/lib/utils";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useLayoutEffect } from "react";
 import FunnyThemeToggle from "@/components/theme/funny-theme-toggle";
 
 interface SelectedLink {
@@ -28,11 +28,12 @@ export default function Body({
 }: BodyProps) {
   const params = useParams();
   const [currentHref, setCurrentHref] = useState("/");
-  useEffect(() => {
+  // Set href from window location on mount  
+  useLayoutEffect(() => {
     if (typeof window === "undefined") return;
     const { pathname, hash } = window.location;
     setCurrentHref(pathname + hash);
-  }, [params]);
+  }, []);
 
   const getChars = (word: string) => {
     let chars: JSX.Element[] = [];

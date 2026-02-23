@@ -39,6 +39,7 @@ export const usePreloader = () => {
 const LOADING_TIME = 2.5;
 function Preloader({ children, disabled = false }: PreloaderProps) {
   const [isLoading, setIsLoading] = useState(true);
+  const [isMounted, setIsMounted] = useState(false);
   const [loadingPercent, setLoadingPercent] = useState(0);
   const loadingTween = useRef<gsap.core.Tween>();
 
@@ -49,7 +50,14 @@ function Preloader({ children, disabled = false }: PreloaderProps) {
     // console.log("killed", loadingTween.current);
   };
   const loadingPercentRef = useRef<{ value: number }>({ value: 0 });
+  
   useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isMounted) return;
+    
     loadingTween.current = gsap.to(loadingPercentRef.current, {
       value: 100,
       duration: LOADING_TIME,
@@ -63,13 +71,15 @@ function Preloader({ children, disabled = false }: PreloaderProps) {
         // window.scrollTo(0, 0);
       },
     });
-  }, []);
+  }, [isMounted]);
 
   return (
     <preloaderContext.Provider
       value={{ isLoading, bypassLoading, loadingPercent }}
     >
-      <AnimatePresence mode="wait">{isLoading && <Loader />}</AnimatePresence>
+      {isMounted && (
+        <AnimatePresence mode="wait">{isLoading && <Loader />}</AnimatePresence>
+      )}
       {children}
     </preloaderContext.Provider>
   );
